@@ -11,3 +11,16 @@ export const storeData = async (collection, data, id) => {
     return await firestore().collection(collection).add(data);
   }
 };
+
+//read data by collection / docs
+export const readDataOnce = async (collection, id) => {
+  if (id) {
+    //get all data from collection
+    const result = await firestore().collection(collection).doc(id).get();
+    return result;
+  } else {
+    //get data from doc under collection
+    const result = await firestore().collection(collection).get();
+    return result;
+  }
+};

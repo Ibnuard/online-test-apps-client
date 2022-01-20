@@ -1,42 +1,79 @@
 import * as React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, SafeAreaView} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import styles from './styles';
-import {storeData} from '../../utils/FirestoreUtils';
-import {Button} from '../../components';
+import {readDataOnce, storeData} from '../../utils/FirestoreUtils';
+import {Button, Input} from '../../components';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   const [userId, setUserId] = React.useState('');
   const [userPassword, setUserPassword] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState();
 
-  const usersCollection = firestore().collection('Users');
+  const getData = async () => {
+    setErrorMessage('');
+    setIsLoading(true);
 
-  const storeUserData = async () => {
-    await storeData()
-      .then(() => console.log('Store Success!'))
-      .catch(e => console.log('Store Error : ' + e.message));
+    await readDataOnce('Users', userId)
+      .then(snapshot => {
+        const data = snapshot?.data();
+        if (data) {
+          console.log('data : ' + JSON.stringify(data));
+          if (data.loginStatus == 0) {
+            data.userPassword == userPassword
+              ? navigateToHome()
+              : setErrorMessage('Password tidak sesuai!');
+          } else {
+            setErrorMessage('Sudah login di tempat lain!');
+          }
+        } else {
+          console.log('Data not exist!');
+          setErrorMessage('Data tidak ditemukan!');
+        }
+      })
+      .catch(err => {
+        console.log('Error : ' + err.message);
+      });
+
+    //setResult(user);
+    return () => setIsLoading(false);
+  };
+
+  const navigateToHome = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Home'}],
+    });
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Hallo Login Screen</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.containerFlex}>
+        <Text style={styles.textWelcome}>Masuk</Text>
 
-      <View style={styles.inputContainer}>
-        <TextInput
+        <Input
           placeholder={'User ID'}
           onChangeText={text => setUserId(text)}
           value={userId}
         />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
+        <Input
           placeholder={'Password'}
           onChangeText={text => setUserPassword(text)}
           value={userPassword}
         />
+        <Button
+          isLoading={isLoading}
+          disabled={!userId || !userPassword}
+          title={'Masuk'}
+          containerStyle={styles.buttonContainer}
+          onPress={() => getData()}
+        />
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{errorMessage}</Text>
+        </View>
       </View>
-      <Button />
-    </View>
+    </SafeAreaView>
   );
 };
 
