@@ -24,3 +24,8 @@ export const readDataOnce = async (collection, id) => {
     return result;
   }
 };
+
+//update data
+export const updateData = async (collection, id, data) => {
+  return await firestore().collection(collection).doc(id).update(data);
+};

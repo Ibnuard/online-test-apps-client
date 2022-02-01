@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
 
-  buttonContainer: {marginVertical: 18},
+  buttonContainer: {marginVertical: 32},
 
   errorContainer: {
     alignItems: 'center',

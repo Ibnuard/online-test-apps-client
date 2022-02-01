@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, Text, Image} from 'react-native';
+import {StorageReadData} from '../../utils/StorageUtils';
 import styles from './styles';
 
 const SplashScreen = ({navigation}) => {
@@ -10,9 +11,14 @@ const SplashScreen = ({navigation}) => {
         routes: [{name: 'Login'}],
       });
     }, 2500);
-
-    return () => false;
+    //checkData();
   }, []);
+
+  const checkData = async () => {
+    const data = await StorageReadData('auth', true);
+
+    console.log('Data : ' + JSON.stringify(data));
+  };
 
   return (
     <View style={styles.container}>

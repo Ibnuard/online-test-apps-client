@@ -1,14 +1,19 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
+import {WebView} from 'react-native-webview';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, route}) => {
+  const URL = route.params.data;
+
+  console.log('PARAMETER : ' + URL);
+
   return (
-    <View>
-      <Text>Hallo</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text>Navigate to Login Screen</Text>
-      </TouchableOpacity>
-    </View>
+    <WebView
+      source={{
+        uri: URL,
+      }}
+      geolocationEnabled={true}
+    />
   );
 };
 
