@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "44458832689",
+    "project_id": "onlinetest-373f9",
+    "storage_bucket": "onlinetest-373f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44458832689:android:f9e3a2a6ac8e46441ef610",
+        "android_client_info": {
+          "package_name": "com.ardx.client.onlinetest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44458832689-6rk2g964c4be5qc7feur766oh1ipfli7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXKQv1lsVjeNM8mwgk9jXR6a27RBA7260"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44458832689-6rk2g964c4be5qc7feur766oh1ipfli7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "44458832689-cqdiku9m4giaa2960jp6tgn4v31pp9li.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ardx.client.onlinetest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

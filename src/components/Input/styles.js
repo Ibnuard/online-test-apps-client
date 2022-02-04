@@ -1,9 +1,9 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 12,
-    paddingVertical: 16,
+    paddingVertical: Platform.OS == 'ios' ? 16 : 0,
     backgroundColor: 'white',
     borderRadius: 8,
     marginVertical: 8,
@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
     shadowRadius: 2.84,
 
     elevation: 4,
+  },
+
+  input: {
+    color: 'black',
   },
 
   errorText: {

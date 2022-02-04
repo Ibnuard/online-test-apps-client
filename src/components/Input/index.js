@@ -16,7 +16,9 @@ const Input = props => {
       <View style={[containerStyle, styles.container]}>
         <TextInput
           {...props}
+          style={styles.input}
           placeholder={placeholder}
+          placeholderTextColor={'gray'}
           onChangeText={onChangeText}
           value={value}
         />

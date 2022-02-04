@@ -13,7 +13,7 @@ import {Button, Input} from '../../components';
 import {StorageStoreData} from '../../utils/StorageUtils';
 import {LOGIN_URL} from '../../api/env';
 
-const LoginScreen = ({navigation}) => {
+const AddUserScreen = ({navigation}) => {
   const [userId, setUserId] = React.useState('');
   const [userPassword, setUserPassword] = React.useState('');
   const [userToken, setUserToken] = React.useState('');
@@ -30,19 +30,10 @@ const LoginScreen = ({navigation}) => {
       .then(snapshot => {
         const data = snapshot?.data();
         if (data) {
-          console.log('data : ' + JSON.stringify(data));
-          if (data.loginStatus == 0) {
-            data.userPassword == userPassword
-              ? checkToken(data.token)
-              : setErrorMessage('Password tidak sesuai!');
-          } else {
-            setIsLoading(false);
-            setErrorMessage('Sudah login di tempat lain!');
-          }
-        } else {
-          console.log('Data not exist!');
           setIsLoading(false);
-          setErrorMessage('Data tidak ditemukan!');
+          setErrorMessage('UserId sudah ada!');
+        } else {
+          registerUser();
         }
       })
       .catch(err => {
@@ -53,47 +44,23 @@ const LoginScreen = ({navigation}) => {
     return () => setIsLoading(false);
   };
 
-  const navigateToHome = async () => {
-    await updateData('Users', userId, {loginStatus: 1}).then(() => {
-      saveData();
-    });
-  };
-
-  const checkToken = token => {
-    if (token == userToken) {
-      navigateToHome();
-    } else {
-      setIsLoading(false);
-      setErrorMessage('Token salah!');
-    }
-  };
-
-  const saveData = async () => {
+  async function registerUser() {
     const data = {
       userId: userId,
-      password: userPassword,
+      userPassword: userPassword,
       token: userToken,
+      loginStatus: 0,
     };
 
-    await StorageStoreData('auth', data, true);
-
-    navigation.reset({
-      index: 0,
-      routes: [
-        {
-          name: 'Home',
-          params: {
-            data: LOGIN_URL(userId, userPassword, userToken),
-          },
-        },
-      ],
+    await storeData('Users', data, userId).then(() => {
+      navigation.goBack();
     });
-  };
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.containerFlex}>
-        <Text style={styles.textWelcome}>Masuk</Text>
+        <Text style={styles.textWelcome}>Tambah</Text>
         <Input
           placeholder={'User ID'}
           onChangeText={text => setUserId(text)}
@@ -121,14 +88,9 @@ const LoginScreen = ({navigation}) => {
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{errorMessage}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.versionButton}
-          onLongPress={() => navigation.navigate('AdminPass')}>
-          <Text style={styles.textVersion}>v1.0</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
 
-export default LoginScreen;
+export default AddUserScreen;
