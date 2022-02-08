@@ -57,6 +57,12 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 24,
   },
+
+  textDesc: {
+    color: 'gray',
+    alignSelf: 'center',
+    marginTop: 12,
+  },
 });
 
 export default styles;

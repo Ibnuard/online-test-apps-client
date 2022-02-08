@@ -19,6 +19,8 @@ const AdminPassScreen = ({navigation, route}) => {
   const [updateUser, setUpdateUser] = React.useState(0);
   const [isAdmin, setIsAdmin] = React.useState(false);
 
+  const [keyword, setKeyword] = React.useState('');
+
   React.useEffect(() => {
     const subscriber = firestore()
       .collection('Users')
@@ -39,6 +41,22 @@ const AdminPassScreen = ({navigation, route}) => {
     // Unsubscribe from events when no longer in use
     return () => subscriber();
   }, [updateUser]);
+
+  React.useEffect(() => {
+    return () => filteredArray();
+  }, [keyword]);
+
+  function filteredArray() {
+    console.log('filtering...');
+    if (users && keyword.length) {
+      const res = users.filter(function (item) {
+        const uid = item?.userId.toLowerCase();
+        const key = keyword.toLowerCase();
+        return uid.includes(key);
+      });
+      return res;
+    } else return users;
+  }
 
   async function updateStatus(id) {
     console.log('Updating status : ' + id);
@@ -109,11 +127,17 @@ const AdminPassScreen = ({navigation, route}) => {
           title={'+ Tambah User'}
           onPress={() => navigation.navigate('AddUser')}
         />
+        <Input
+          placeholder={'Cari User...'}
+          onChangeText={text => setKeyword(text)}
+          value={keyword}
+        />
+        <Text style={styles.textDesc}>Tekan lama untuk menghapus user</Text>
         {isLoading ? (
           <ActivityIndicator />
         ) : (
           <FlatList
-            data={users}
+            data={filteredArray()}
             contentContainerStyle={styles.flatList}
             renderItem={({item}) => (
               <TouchableOpacity

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, TextInput, Text} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 
 const Input = props => {
@@ -11,6 +11,8 @@ const Input = props => {
     errorMessage,
   } = props;
 
+  const [passwordShow, setPasswordShow] = React.useState(true);
+
   return (
     <>
       <View style={[containerStyle, styles.container]}>
@@ -20,8 +22,16 @@ const Input = props => {
           placeholder={placeholder}
           placeholderTextColor={'gray'}
           onChangeText={onChangeText}
+          secureTextEntry={props?.isPassword && passwordShow}
           value={value}
         />
+        {props?.isPassword && (
+          <TouchableOpacity onPress={() => setPasswordShow(!passwordShow)}>
+            <Text style={{color: 'blue'}}>
+              {passwordShow ? 'Show' : 'Hide'}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
       {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
     </>

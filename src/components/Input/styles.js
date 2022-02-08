@@ -2,6 +2,8 @@ import {Platform, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 12,
     paddingVertical: Platform.OS == 'ios' ? 16 : 0,
     backgroundColor: 'white',
@@ -19,6 +21,8 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    flex: 1,
+    marginRight: 8,
     color: 'black',
   },
 

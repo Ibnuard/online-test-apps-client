@@ -100,6 +100,7 @@ const LoginScreen = ({navigation}) => {
           value={userId}
         />
         <Input
+          isPassword
           placeholder={'Password'}
           onChangeText={text => setUserPassword(text)}
           value={userPassword}
