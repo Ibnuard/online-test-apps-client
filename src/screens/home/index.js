@@ -9,6 +9,7 @@ const HomeScreen = ({navigation, route}) => {
 
   return (
     <WebView
+      containerStyle={{padding: 14}}
       source={{
         uri: URL,
       }}

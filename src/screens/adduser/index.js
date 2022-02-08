@@ -81,7 +81,7 @@ const AddUserScreen = ({navigation}) => {
         <Button
           isLoading={isLoading}
           disabled={!userId || !userPassword || !userToken}
-          title={'Masuk'}
+          title={'Tambah'}
           containerStyle={styles.buttonContainer}
           onPress={() => getData()}
         />

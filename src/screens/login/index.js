@@ -34,7 +34,8 @@ const LoginScreen = ({navigation}) => {
           if (data.loginStatus == 0) {
             data.userPassword == userPassword
               ? checkToken(data.token)
-              : setErrorMessage('Password tidak sesuai!');
+              : (setErrorMessage('Password tidak sesuai!'),
+                setIsLoading(false));
           } else {
             setIsLoading(false);
             setErrorMessage('Sudah login di tempat lain!');

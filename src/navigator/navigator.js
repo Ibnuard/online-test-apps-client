@@ -44,7 +44,7 @@ export const MainNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          headerShown: true,
+          headerShown: false,
           title: '',
         }}
       />
